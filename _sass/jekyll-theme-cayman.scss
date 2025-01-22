@@ -23,32 +23,218 @@
 
 * {
   box-sizing: border-box;
-}
-
-body {
-  padding: 0;
   margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  color: $body-text-color;
+  padding: 0; 
 }
 
-#skip-to-content {
-  height: 1px;
-  width: 1px;
-  position: absolute;
-  overflow: hidden;
-  top: -10px;
+body { 
+  color: $body-text-color;
+  background-color: white;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: medium;
+  line-height: 1.5;
+  
+  /* The previous declarations concern the descendant of the body element */
+  
+  /* Hide scrollbar for all browsers */
+  
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge (webkit browsers) */
+  }
+}
 
-  &:focus {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    height: auto;
-    width: auto;
-    background: invert($body-link-color);
-    outline: thick solid invert($body-link-color);
+div.bar {
+  height: 8vh;
+  width: 100vw;
+  background-color: #333;
+  box-shadow: 0 0.25rem 0.5rem black;
+  position: fixed;
+  z-index: 1; /* A stack context is needed here for the bar to always be displayed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.logo,
+button {
+  height: 100%;
+}
+
+picture, 
+img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+div.scrollbox {
+  height: 100vh;
+  overflow: hidden auto;
+  perspective: 1rem; 
+}
+
+header {
+  position: relative;
+  overflow: hidden;  /* For images not to overflow the header */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+source {
+  display: none;
+}
+
+*.background,
+*.foreground {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+*.background {
+  transform: translateZ(-1rem) scale(1.5);
+}
+
+*.foreground {
+  transform: translateZ(-0.5rem) scale(1.25);
+}
+
+header>p {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  position: absolute;
+  text-shadow: 0 0 1rem black;
+  align-self: center;
+  text-align: center;
+
+  &>span.name {
+    font-size: 3rem;
+  }
+}
+
+abbr {
+  text-decoration: none;
+}
+
+/* Main content */
+
+main {
+  width: 50vw;
+  margin: 0.5rem 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: teal;
+}
+
+figure {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+figure>img {
+  border-radius: 4%;
+}
+
+ul,
+ol {
+  list-style-position: inside;
+}
+
+li>ul,
+li>ol {
+  margin-left: 1rem;
+}
+
+dd {
+  margin-left: 2rem;
+}
+
+table {
+  border-spacing: 0;
+}
+
+th,
+td {
+  padding: 0.1rem;
+  border: 0.1rem solid black;
+}
+
+blockquote {
+  margin-left: 1rem;
+  padding-left: 1rem;
+  color: gray;
+  border-left: 0.25rem solid gray;
+}
+
+
+
+*.bold {
+  color: blue;
+  font-weight: bold;
+}
+
+*.oblique {
+  color: darkgreen;
+  font-style: oblique;
+}
+
+*.underlined {
+  color: purple;
+  text-decoration: underline;
+}
+
+*.strikethrough {
+  color: red;
+  text-decoration: line-through;
+}
+
+*.overlined {
+  color: magenta;
+  text-decoration: overline;
+}
+
+*.combo{
+  color: black;
+  font-weight: bold;
+  font-style: oblique;
+  text-decoration: underline line-through overline;
+}
+
+footer {
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+/* Style rules for mobile devices */
+
+@media only screen and (max-width: 42rem;) {
+  main {
+    width: 90vw;
+    margin: 0.5rem 5vw;
   }
 }
 
@@ -183,23 +369,9 @@ a {
     font-size: 1rem;
   }
   
-  kbd {
-    background-color: #fafbfc;
-    border: 1px solid #c6cbd1;
-    border-bottom-color: #959da5;
-    border-radius: 3px;
-    box-shadow: inset 0 -1px 0 #959da5;
-    color: #444d56;
-    display: inline-block;
-    font-size: 11px;
-    line-height: 10px;
-    padding: 3px 5px;
-    vertical-align: middle;
-  }
-
-  img {
-    max-width: 100%;
-  }
+img {
+  max-width: 100%;
+}
 
   h1,
   h2,
@@ -258,40 +430,7 @@ a {
     }
   }
 
-  .highlight pre,
-  pre {
-    padding: 0.8rem;
-    overflow: auto;
-    font-size: 0.9rem;
-    line-height: 1.45;
-    border-radius: 0.3rem;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  pre code,
-  pre tt {
-    display: inline;
-    max-width: initial;
-    padding: 0;
-    margin: 0;
-    overflow: initial;
-    line-height: inherit;
-    word-wrap: normal;
-    background-color: transparent;
-    border: 0;
-
-    &:before,
-    &:after {
-      content: normal;
-    }
-  }
-
-  ul,
-  ol {
-    margin-top: 0;
-  }
-
-  blockquote {
+blockquote {
     padding: 0 1rem;
     margin-left: 0;
     color: $blockquote-text-color;
@@ -306,24 +445,23 @@ a {
     }
   }
 
-  table {
-    display: block;
-    width: 100%;
-    overflow: auto;
-    word-break: normal;
-    word-break: keep-all; // For Firefox to horizontally scroll wider tables.
-    -webkit-overflow-scrolling: touch;
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; // For Firefox to horizontally scroll wider tables.
+  -webkit-overflow-scrolling: touch;
 
-    th {
-      font-weight: bold;
-    }
+th {
+  font-weight: bold;
+}
 
-    th,
-    td {
-      padding: 0.5rem 1rem;
-      border: 1px solid $table-border-color;
-    }
-  }
+th,
+td {
+  padding: 0.5rem 1rem;
+  border: 1px solid $table-border-color;
+}
 
   dl {
     padding: 0;
@@ -341,16 +479,12 @@ a {
     }
   }
 
-  hr {
-    height: 2px;
-    padding: 0;
-    margin: 1rem 0;
-    background-color: $hr-border-color;
-    border: 0;
-  }
+hr {
+  height: 2px;
+  background-color: $hr-border-color;
 }
 
-.site-footer {
+footer {
   padding-top: 2rem;
   margin-top: 2rem;
   border-top: solid 1px $hr-border-color;
@@ -368,11 +502,281 @@ a {
   }
 }
 
-.site-footer-owner {
-  display: block;
+  /* Custom CSS */
+/* Custom properties */
+
+:root {
+  --theme-color: #FF8000; /* Orange */
+  --theme-gradient : linear-gradient(135deg, #FF3333, #FF8000);
+}
+
+/* General styling */
+
+* {
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0; 
+}
+
+body { 
+  /* We don't want to set a height here, because it shall be dynamic to contain the scrollbox as a whole */
+  color: black;
+  background-color: white;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: medium;
+  line-height: 1.5;
+  
+  /* The previous declarations concern the descendants of the body element */
+  
+  /* Hide scrollbar for all browsers */
+  
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Edge (webkit browsers) */
+  }
+}
+
+div.scrollbox {
+  height: 100vh;
+  overflow: hidden auto;
+  perspective: 1rem; /* Stacking context above the root's, level 1*/
+  clip-path: (10vh 0 0 0);
+}
+
+header,
+footer {
+  background-color: var(--theme-color);
+  background-image: var(--theme-gradient);
+}
+
+header {
+  position: relative;
+  overflow: hidden;  /* For descendants not to overflow the header */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+  transform-style: preserve-3d; /* Stacking context above the scrollboxe's, level 2 */
+}
+
+source {
+  display: none;
+}
+
+*.background,
+*.foreground {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+}
+
+*.background {
+  transform: translateZ(-1rem) scale(1.414); /* First stacking context above the header's, level 3 */
+}
+
+*.foreground {
+  transform: translateZ(-0.5rem) scale(1.225); /* Second stacking context above the header's, level 3 */
+}	
+
+header>p {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  position: absolute;
+  text-shadow: 0 0 1rem black;
+  align-self: center;
+  text-align: center;
+
+  &>span.name {
+    font-size: 3rem;
+  }
+}
+
+abbr {
+  text-decoration: none;
+}
+
+div.bar {
+  position: absolute; /* Use absolute (in relation with the scrollbox), not fixed (in relation with the body) */
+  top: 0; /* Because some styles place it at the bottom edge of the padding box */
+  left: 0; /* Just to be safe */
+  z-index: 0; /* Third stacking context above the header's, level 3 */
+  height: 10vh;
+  width: 100vw;
+  background-color: rgba(255, 128, 0, 0.9);
+  box-shadow: 0 0.25rem 0.5rem black;
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Above the top bar,  fourth stacking context of level 3, above the header's */
+  height: 100vh;
+  width: 50vw;
+  background-color: var(--theme-color);
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0.25rem 0 0.5rem black;
+}
+
+/* Main content */
+
+main {
+  width: 50vw;
+  margin: 0.5rem 25vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 1.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: teal;
+}
+
+hr {
+  height: 2px;
+  width: 100%;
+}
+
+figure {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+figure>img {
+  border-radius: 4%;
+  width: 100%;
+  object-fit: contain;
+}
+
+ul,
+ol {
+  list-style-position: inside;
+}
+
+li>ul,
+li>ol {
+  margin-left: 1rem;
+}
+
+dd {
+  margin-left: 1rem;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 0.25rem;
+  border: 0.1rem solid black;
+}
+
+blockquote {
+  margin-left: 1rem;
+  padding-left: 1rem;
+  color: gray;
+  border-left: 0.25rem solid gray;
+}
+
+*.bold {
+  color: blue;
   font-weight: bold;
 }
 
-.site-footer-credits {
-  color: $blockquote-text-color;
+*.oblique {
+  color: darkgreen;
+  font-style: oblique;
+}
+
+*.underlined {
+  color: purple;
+  text-decoration: underline;
+}
+
+*.strikethrough {
+  color: red;
+  text-decoration: line-through;
+}
+
+*.overlined {
+  color: magenta;
+  text-decoration: overline;
+}
+
+*.combo{
+  color: black;
+  font-weight: bold;
+  font-style: oblique;
+  text-decoration: underline line-through overline;
+}
+
+footer {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  row-gap: 1rem;
+}
+
+footer>p {
+  color: white;
+  padding: 1rem;
+  border: 0.2rem solid white;
+  border-radius: 6%;
+  box-shadow: 0 0.25rem 0.5rem white;
+  text-align: center;
+  
+  &>span.name {
+    font-size: 1.5rem;
+  }
+  
+  /*
+  animation: 3s linear 1s onscroll;
+
+  @keyframes onscroll {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotateX(180deg); }
+    50% { tranform: rotateY(180deg); }
+    75% { tranform: rotateY(360deg); }
+    100% { transform: rotateX(360deg); }
+  }
+  */
+}
+      
+/* Style rules for mobile devices in portrait mode */
+
+@media screen and (max-width: 42rem) and (orientation: portrait) {
+  header>p {
+    font-size: 1.2rem;
+    
+    &>span.name {
+      font-size: 1.6rem;
+    }
+  }
+  
+  main {
+    width: 90vw;
+    margin: 0.5rem 5vw;
+  }
 }
