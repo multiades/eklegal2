@@ -15,8 +15,8 @@
     <div class="scrollbox"> <!-- It glides in relation with the body -->
       <header>
         <picture class="background">
-          <source srcset="/assets/images/library_2_3.jpg" media="(max-width: 42rem)"> 
-          <img src="/assets/images/library_16_9.jpg" class="background">
+          <source srcset="{{ '/assets/images/library_2_3.jpg?v=' | append: site.github.build_revision | relative_url }}">
+          <img src="{{ '/assets/images/library_16_9.jpg?v=' | append: site.github.build_revision | relative_url }}" class="background">
         </picture>
         <picture class="foreground"> 
           <source srcset="/assets/images/desk_2_3.png" media="(max-width: 42rem)">
