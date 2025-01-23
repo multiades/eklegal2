@@ -28,500 +28,9 @@
 }
 
 body { 
-  color: $body-text-color;
   background-color: white;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: medium;
-  line-height: 1.5;
+  color: 
   
-  /* The previous declarations concern the descendant of the body element */
-  
-  /* Hide scrollbar for all browsers */
-  
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-  
-  &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, and Edge (webkit browsers) */
-  }
-}
-
-div.bar {
-  height: 8vh;
-  width: 100vw;
-  background-color: #333;
-  box-shadow: 0 0.25rem 0.5rem black;
-  position: fixed;
-  z-index: 1; /* A stack context is needed here for the bar to always be displayed */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-div.logo,
-button {
-  height: 100%;
-}
-
-picture, 
-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-div.scrollbox {
-  height: 100vh;
-  overflow: hidden auto;
-  perspective: 1rem; 
-}
-
-header {
-  position: relative;
-  overflow: hidden;  /* For images not to overflow the header */
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100%;
-  transform-style: preserve-3d;
-}
-
-source {
-  display: none;
-}
-
-*.background,
-*.foreground {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-}
-
-*.background {
-  transform: translateZ(-1rem) scale(1.5);
-}
-
-*.foreground {
-  transform: translateZ(-0.5rem) scale(1.25);
-}
-
-header>p {
-  color: white;
-  font-size: 2rem;
-  font-weight: bold;
-  position: absolute;
-  text-shadow: 0 0 1rem black;
-  align-self: center;
-  text-align: center;
-
-  &>span.name {
-    font-size: 3rem;
-  }
-}
-
-abbr {
-  text-decoration: none;
-}
-
-/* Main content */
-
-main {
-  width: 50vw;
-  margin: 0.5rem 25vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  row-gap: 1rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: teal;
-}
-
-figure {
-  align-self: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-figure>img {
-  border-radius: 4%;
-}
-
-ul,
-ol {
-  list-style-position: inside;
-}
-
-li>ul,
-li>ol {
-  margin-left: 1rem;
-}
-
-dd {
-  margin-left: 2rem;
-}
-
-table {
-  border-spacing: 0;
-}
-
-th,
-td {
-  padding: 0.1rem;
-  border: 0.1rem solid black;
-}
-
-blockquote {
-  margin-left: 1rem;
-  padding-left: 1rem;
-  color: gray;
-  border-left: 0.25rem solid gray;
-}
-
-
-
-*.bold {
-  color: blue;
-  font-weight: bold;
-}
-
-*.oblique {
-  color: darkgreen;
-  font-style: oblique;
-}
-
-*.underlined {
-  color: purple;
-  text-decoration: underline;
-}
-
-*.strikethrough {
-  color: red;
-  text-decoration: line-through;
-}
-
-*.overlined {
-  color: magenta;
-  text-decoration: overline;
-}
-
-*.combo{
-  color: black;
-  font-weight: bold;
-  font-style: oblique;
-  text-decoration: underline line-through overline;
-}
-
-footer {
-  background-color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  height: 100%;
-}
-
-/* Style rules for mobile devices */
-
-@media only screen and (max-width: 42rem;) {
-  main {
-    width: 90vw;
-    margin: 0.5rem 5vw;
-  }
-}
-
-a {
-  color: $body-link-color;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.btn {
-  display: inline-block;
-  margin-bottom: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 0.3rem;
-  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.8);
-    text-decoration: none;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-
-  + .btn {
-    margin-left: 1rem;
-  }
-
-  @include large {
-    padding: 0.75rem 1rem;
-  }
-
-  @include medium {
-    padding: 0.6rem 0.9rem;
-    font-size: 0.9rem;
-  }
-
-  @include small {
-    display: block;
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-
-    + .btn {
-      margin-top: 1rem;
-      margin-left: 0;
-    }
-  }
-}
-
-.page-header {
-  color: $header-heading-color;
-  text-align: center;
-  background-color: $header-bg-color;
-  background-image: linear-gradient(120deg, $header-bg-color-secondary, $header-bg-color);
-
-  @include large {
-    padding: 5rem 6rem;
-  }
-
-  @include medium {
-    padding: 3rem 4rem;
-  }
-
-  @include small {
-    padding: 2rem 1rem;
-  }
-}
-
-.project-name {
-  margin-top: 0;
-  margin-bottom: 0.1rem;
-
-  @include large {
-    font-size: 3.25rem;
-  }
-
-  @include medium {
-    font-size: 2.25rem;
-  }
-
-  @include small {
-    font-size: 1.75rem;
-  }
-}
-
-.project-tagline {
-  margin-bottom: 2rem;
-  font-weight: normal;
-  opacity: 0.7;
-
-  @include large {
-    font-size: 1.25rem;
-  }
-
-  @include medium {
-    font-size: 1.15rem;
-  }
-
-  @include small {
-    font-size: 1rem;
-  }
-}
-
-.main-content {
-  word-wrap: break-word;
-
-  :first-child {
-    margin-top: 0;
-  }
-
-  @include large {
-    max-width: 64rem;
-    padding: 2rem 6rem;
-    margin: 0 auto;
-    font-size: 1.1rem;
-  }
-
-  @include medium {
-    padding: 2rem 4rem;
-    font-size: 1.1rem;
-  }
-
-  @include small {
-    padding: 2rem 1rem;
-    font-size: 1rem;
-  }
-  
-img {
-  max-width: 100%;
-}
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-    font-weight: normal;
-    color: $section-headings-color;
-  }
-
-  p {
-    margin-bottom: 1em;
-  }
-
-  code {
-    padding: 2px 4px;
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.9rem;
-    color: $code-text-color;
-    background-color: $code-bg-color;
-    border-radius: 0.3rem;
-  }
-
-  pre {
-    padding: 0.8rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    color: $code-text-color;
-    word-wrap: normal;
-    background-color: $code-bg-color;
-    border: solid 1px $border-color;
-    border-radius: 0.3rem;
-
-    > code {
-      padding: 0;
-      margin: 0;
-      font-size: 0.9rem;
-      color: $code-text-color;
-      word-break: normal;
-      white-space: pre;
-      background: transparent;
-      border: 0;
-    }
-  }
-
-  .highlight {
-    margin-bottom: 1rem;
-
-    pre {
-      margin-bottom: 0;
-      word-break: normal;
-    }
-  }
-
-blockquote {
-    padding: 0 1rem;
-    margin-left: 0;
-    color: $blockquote-text-color;
-    border-left: 0.3rem solid $border-color;
-
-    > :first-child {
-      margin-top: 0;
-    }
-
-    > :last-child {
-      margin-bottom: 0;
-    }
-  }
-
-table {
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: normal;
-  word-break: keep-all; // For Firefox to horizontally scroll wider tables.
-  -webkit-overflow-scrolling: touch;
-
-th {
-  font-weight: bold;
-}
-
-th,
-td {
-  padding: 0.5rem 1rem;
-  border: 1px solid $table-border-color;
-}
-
-  dl {
-    padding: 0;
-
-    dt {
-      padding: 0;
-      margin-top: 1rem;
-      font-size: 1rem;
-      font-weight: bold;
-    }
-
-    dd {
-      padding: 0;
-      margin-bottom: 1rem;
-    }
-  }
-
-hr {
-  height: 2px;
-  background-color: $hr-border-color;
-}
-
-footer {
-  padding-top: 2rem;
-  margin-top: 2rem;
-  border-top: solid 1px $hr-border-color;
-
-  @include large {
-    font-size: 1rem;
-  }
-
-  @include medium {
-    font-size: 1rem;
-  }
-
-  @include small {
-    font-size: 0.9rem;
-  }
-}
-
-  /* Custom CSS */
-/* Custom properties */
-
-:root {
-  --theme-color: #FF8000; /* Orange */
-  --theme-gradient : linear-gradient(135deg, #FF3333, #FF8000);
-}
-
-/* General styling */
-
-* {
-  box-sizing: border-box; 
-  margin: 0;
-  padding: 0; 
-}
-
-body { 
-  /* We don't want to set a height here, because it shall be dynamic to contain the scrollbox as a whole */
-  color: black;
-  background-color: white;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: medium;
   line-height: 1.5;
@@ -539,26 +48,30 @@ body {
 }
 
 div.scrollbox {
-  height: 100vh;
   overflow: hidden auto;
-  perspective: 1rem; /* Stacking context above the root's, level 1*/
-  clip-path: (10vh 0 0 0);
+  perspective: 1rem; /* Stacking context of level 1, above the root's */
 }
 
 header,
 footer {
-  background-color: var(--theme-color);
-  background-image: var(--theme-gradient);
+  background-color: ;
+  background-image: ;
 }
 
 header {
-  position: relative;
+  width: 100vw;
+  height: 100vh;
+  position: relative; /* Create a placement origin point for descendants */
+  top: 0;
+  left: 0;
   overflow: hidden;  /* For descendants not to overflow the header */
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  transform-style: preserve-3d; /* Stacking context of level 2 */
+}
+
+picture, 
+img {
+  width: 100%;
   height: 100%;
-  transform-style: preserve-3d; /* Stacking context above the scrollboxe's, level 2 */
 }
 
 source {
@@ -567,28 +80,32 @@ source {
 
 *.background,
 *.foreground {
-  width: 100%;
-  height: 100%;
   position: absolute;
+  bottom: 0;
+  left: 0;
   object-fit: cover;
 }
 
 *.background {
-  transform: translateZ(-1rem) scale(1.414); /* First stacking context above the header's, level 3 */
+  transform: translateZ(-1rem) scale(1); /* First stacking of level 3 */
 }
 
 *.foreground {
-  transform: translateZ(-0.5rem) scale(1.225); /* Second stacking context above the header's, level 3 */
+  transform: translateZ(-0.5rem) scale(1); /* Second stacking context of level 3 */
 }	
 
 header>p {
   color: white;
   font-size: 2rem;
   font-weight: bold;
-  position: absolute;
-  text-shadow: 0 0 1rem black;
-  align-self: center;
   text-align: center;
+  text-shadow: $txt-shadow;
+
+  position: absolute;
+  top: 50%;
+  left: 50;
+  /* Centering the center of p, not its corner, third stacking context of level 3 */
+  transform: translate(-50%, -50%); 
 
   &>span.name {
     font-size: 3rem;
@@ -597,45 +114,83 @@ header>p {
 
 abbr {
   text-decoration: none;
-}
+ }
 
 div.bar {
-  position: absolute; /* Use absolute (in relation with the scrollbox), not fixed (in relation with the body) */
-  top: 0; /* Because some styles place it at the bottom edge of the padding box */
-  left: 0; /* Just to be safe */
-  z-index: 0; /* Third stacking context above the header's, level 3 */
-  height: 10vh;
-  width: 100vw;
-  background-color: rgba(255, 128, 0, 0.9);
-  box-shadow: 0 0.25rem 0.5rem black;
+  height: 10%;
+  width: 100%;
+  /* Fixed and sticky positions work in relation with the body */
   position: absolute;
+  top: 0; 
+  left: 0;
+  background-color: ;
+  box-shadow: 0 0.25rem 0.5rem black;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
+button {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.3rem;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  @include large {
+  }
+
+  @include medium {
+  }
+
+  @include small {
+    display: block;
+  }
+}
+
 nav {
+  width: 50%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1; /* Above the top bar,  fourth stacking context of level 3, above the header's */
-  height: 100vh;
-  width: 50vw;
-  background-color: var(--theme-color);
+  background-color: $theme;
   transition: all 0.3s ease-in-out;
   box-shadow: 0.25rem 0 0.5rem black;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 /* Main content */
 
 main {
+  /* The following two declarations do not concern small screens */
   width: 50vw;
-  margin: 0.5rem 25vw;
+  margin: 1rem 25vw;
+  word-wrap: break-word; /* For inheritance */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  row-gap: 1.5rem;
+  row-gap: 1rem;
 }
 
 h1,
@@ -644,12 +199,40 @@ h3,
 h4,
 h5,
 h6 {
-  color: teal;
+  color: $heading-color;
+  font-weight: normal;
+}
+
+span.oblique {
+  color: darkgreen;
+  font-style: oblique;
+}
+
+span.underlined {
+  color: purple;
+  text-decoration: underline;
+}
+
+span.strikethrough {
+  color: red;
+  text-decoration: line-through;
+}
+
+span.overlined {
+  color: magenta;
+  text-decoration: overline;
+}
+
+span.combo{
+  color: brown;
+  font-weight: bold;
+  font-style: oblique;
+  text-decoration: underline line-through overline;
 }
 
 hr {
-  height: 2px;
   width: 100%;
+  height: 0.25rem;
 }
 
 figure {
@@ -661,9 +244,8 @@ figure {
 }
 
 figure>img {
-  border-radius: 4%;
-  width: 100%;
   object-fit: contain;
+  border-radius: 4%;
 }
 
 ul,
@@ -676,84 +258,66 @@ li>ol {
   margin-left: 1rem;
 }
 
-dd {
-  margin-left: 1rem;
-}
-
 table {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all; /* For Firefox to horizontally scroll wider tables */
+  -webkit-overflow-scrolling: touch;
   border-spacing: 0;
   border-collapse: collapse;
+}
+
+th {
+  font-weight: bold;
 }
 
 th,
 td {
   padding: 0.25rem;
-  border: 0.1rem solid black;
+  border: 0.25rem solid $tb-border-color;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  margin-left: 1rem;
 }
 
 blockquote {
   margin-left: 1rem;
   padding-left: 1rem;
-  color: gray;
   border-left: 0.25rem solid gray;
 }
 
-*.bold {
-  color: blue;
-  font-weight: bold;
-}
-
-*.oblique {
-  color: darkgreen;
-  font-style: oblique;
-}
-
-*.underlined {
-  color: purple;
-  text-decoration: underline;
-}
-
-*.strikethrough {
-  color: red;
-  text-decoration: line-through;
-}
-
-*.overlined {
-  color: magenta;
-  text-decoration: overline;
-}
-
-*.combo{
-  color: black;
-  font-weight: bold;
-  font-style: oblique;
-  text-decoration: underline line-through overline;
-}
+/* Footer */
 
 footer {
-  padding: 1rem 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   row-gap: 1rem;
 }
 
 footer>p {
   color: white;
-  padding: 1rem;
-  border: 0.2rem solid white;
+  padding: 2rem;
+  border: 0.25rem solid white;
   border-radius: 6%;
   box-shadow: 0 0.25rem 0.5rem white;
   text-align: center;
   
   &>span.name {
-    font-size: 1.5rem;
+    font-size: 3rem;
   }
   
   /*
   animation: 3s linear 1s onscroll;
-
   @keyframes onscroll {
     0% { transform: rotate(0deg); }
     25% { transform: rotateX(180deg); }
@@ -763,7 +327,7 @@ footer>p {
   }
   */
 }
-      
+
 /* Style rules for mobile devices in portrait mode */
 
 @media screen and (max-width: 42rem) and (orientation: portrait) {
