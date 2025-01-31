@@ -1,0 +1,265 @@
+/* Custom properties (CSS variables) */
+
+*:root {
+  /* Theme */
+  --theme-color: #FF8000;
+  --bar-color: rgba(255, 128, 0, 0.9);
+  --theme-gradient: linear-gradient(135deg, #FF3333, #FF8000);
+  /* $header-bg-color: from #159957 to #155799 (original cayman) */
+
+  /* Text */
+  --heading-color: #159957; 
+  --txt-color: #606c71;
+  --txt-font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --link-color: #1e6bb8;
+  --bq-txt-color: #819198;
+}
+
+/* General styling */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body { 
+  color: var(--txt-color);
+  font-family: var(--txt-font);
+  font-size: medium;
+  line-height: 1.5;
+  overflow: hidden; /* We don't need the body to be scrollable, we use it like a gliding base */
+  
+  &>div.scrollbox {
+    height: 100vh; /* We need hard values for the contents of the scrollbox to overflow */
+    width: 100vw; 
+    overflow: hidden auto;
+    perspective: 16px; /* Stacking context of level 1, above the root's, perspective values are recommendeded to be pixels */
+
+    & source {
+      display: none;
+    }
+
+    & abbr {
+      text-decoration: none;
+    }
+
+/* Header */
+
+    &>header {
+      height: 100vh; /* Percentages get messy with the scrollbars */
+      width: 100vw;
+      position: relative; /* Create a placement origin point for descendants */
+      transform-style: preserve-3d; /* Stacking context of level 2 */
+      /* Overflow in the y-axis does not concern us here; the background color of main should cover it */
+      z-index: -1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+     
+      &>*.background,
+      &>*.foreground {
+        width: 100%;
+        height: 100%;
+        position: absolute; /* Placed in relation with the placed header */
+        object-fit: cover;
+      }
+
+      &>*.background {
+        transform: translateZ(0) scale(1); /* First stacking context of level 3 */
+      }
+
+      &>*.foreground {
+        transform: translateZ(0) scale(1); /* Second stacking context of level 3 */
+      }
+
+      &>p {
+        position: absolute;
+        align-self: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 0 0.25rem 0.5rem black;
+
+        &>span.name {
+          font-size: 3rem;
+        }
+      }
+    }
+
+/* Main */
+
+    &>main {
+      transform: translateZ(0); /*Needed to appear on top, 3D stacking contexts overpower 2D ones */
+      /* The following two declarations do not concern narrow displays */
+      width: 100%;
+      background-color: white; /* Transparent by default */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      row-gap: 1rem; /* Adds spacing between rows */
+      overflow-wrap: break-word;
+
+/*
+main::before {
+  content:'';
+  position: absolute; In relation with main 
+  top: 0;
+  width: 100vw;
+  height: 100%; Of main 
+  background-color: white;
+}
+*/
+
+      &>h1, 
+      &>h2,
+      &>h3,
+      &>h4,
+      &>h5,
+      &>h6 {
+        color: var(--heading-color);
+        font-weight: normal;
+      }
+
+      &>span.bold {
+        font-weight: bold;
+      }
+
+      &>p {
+      
+        &>span.oblique {
+          font-style: oblique;
+        }
+
+        &>span.underlined {
+          text-decoration: underline;
+        }
+
+        &>span.strikethrough {
+          text-decoration: line-through;
+        }
+
+        &>span.overlined {
+          text-decoration: overline;
+        }
+
+        &>span.bold.oblique.underlined.strikethrough.overlined {
+          color: rebeccapurple;
+          text-decoration: underline line-through overline;
+        }
+      }
+        
+      &>hr {
+        width: 100%;
+        height: 0.25rem;
+      }
+
+      &>figure {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+        &>img {
+          width: 75%;
+          height: auto;
+          object-fit: contain;
+          border-radius: 4%;
+        }
+      }
+
+      &>ul,
+      &>ol {
+        list-style-position: inside;
+
+        &>li {
+          &>ul,
+          &>ol {
+            margin-left: 1rem;
+          }
+        }
+      }
+
+      &>table {
+        display: block;
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        &>tr {
+          &:nth-child(odd) {
+            background-color: buff;
+          }
+
+          &>th {
+            font-weight: bold;
+          }
+
+          &>th,
+          &>td {
+            padding: 0.25rem;
+            border: 0.25rem solid black; 
+          }
+        }
+      }
+
+      &>dl {
+        &>dt {
+          font-weight: bold; 
+        }
+
+        &>dd {
+          margin-left: 1rem;
+        }
+      }
+
+      &>blockquote {
+        margin-left: 1rem;
+        padding-left: 1rem;
+        color: var(--bq-txt-color);
+        border-left: 0.25rem solid var(--bq-txt-color);
+      }
+    }
+
+/* Footer */
+
+    &>footer {
+      background-color: var(--theme-color);
+      background-image: var(--theme-gradient);
+      /* Do I need a z translation here? */
+      padding: 1rem 1rem 1rem 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      row-gap: 1rem;
+
+      &>p {
+        color: white;
+        padding: 2rem;
+        border: 0.25rem solid white;
+        border-radius: 4%;
+        box-shadow: 0 0.25rem 0.5rem white;
+        text-align: center;
+  
+        &>span.name {
+          font-size: 3rem;
+        }
+      }
+    }
+  }
+}
+
+/* Styling for narrower displays */
+
+@media screen and (max-width: 42rem) { 
+  body>header>p {
+    font-size: 1.25rem;
+    
+    &>span.name {
+      font-size: 1.5rem;
+    }
+  }
+}
