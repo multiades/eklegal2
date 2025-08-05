@@ -1,0 +1,216 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
+
+html,
+body {
+  /* The default behavior for block-level elements is width: 100%; */
+  height: 100%; 
+}
+  
+body {
+  /* Hereditary properties */
+  font-family: 'Advent Pro', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  font-size: medium;
+}
+  
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to use :hover, it is evident */
+}
+  	    
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+
+header {
+  --navHeaderHeight: 80px;
+  --generalBg: #f2f3f4; 
+  --transDuration: 800ms; /* trans @ transition */
+  --transCurve: ease-in-out; 
+
+  height: 100%;
+  background: url('../../assets/images/hall.jpg') center/cover no-repeat fixed; /* Background attachment is fixed; */
+  padding: 0 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+div#navHeader {
+  /* Custom CSS properties */
+  --vertPad: 16px; /* vert @ vertical, pad @ padding */
+  --horizPad: 16px; /* horiz @ horizontal */
+  --bg: radial-gradient(ellipse 80% 100% at center, transparent 20%, var(--generalBg) 50%);
+  --labelDim: 25px; /* dim @ dimensions */
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Stack on top of subsequent elements that create a stacking context at the base z-index 0 */
+  width: 100%; 
+  height: var(--navHeaderHeight);
+  padding: var(--vertPad) var(--horizPad);
+  /* background-image: var(--bg); */
+  background-color: var(--generalBg);
+  display: flex;
+  justify-content: space-between; /* Maximum space between flex items */
+  align-items: center;
+  transition: background-image var(--transDuration) var(--transCurve);
+
+  &>img.logo {
+    width: auto;
+    height: 100%;
+  }
+
+  &>label[for="navToggler"] {
+    --line: calc(var(--labelDim) / 5); /* Operating on a unitless number preserves the unit */
+    --primaryColor: black;
+    --secondaryColor: red;
+    --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
+ 
+    width: var(--labelDim);
+    height: var(--labelDim);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: var(--line);
+    transition: transform var(--transDuration) var(--transCurve);
+    /* The label has no delay in both states, more aesthetic this way */
+
+    &>span {
+      width: 100%; /* Flex items always respect dimensions */
+      height: var(--line);
+      /* The animation is suffering if only transform, opacity and bg-color are transitioned on*/
+      transition: all calc(var(--transDuration) / 2) var(--transCurve); /* Half the label rotation's duration */
+      transition-delay: 0s; 
+      background-color: var(--primaryColor);
+    }
+  }
+}
+
+nav#navbar {
+  --topPad: 48px; 
+
+  position: fixed;
+  top: var(--navHeaderHeight); /* Directly below the div.navHeader */
+  left: 0;
+  width: 100%; 
+  height: calc(100dvh - var(--navHeaderHeight)); /* dvh units return pixels */
+  background-color: var(--generalBg);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% var(--topPad),
+    calc(100% - var(--topPad)) 0,
+    var(--topPad) 0,
+    0 var(--topPad),
+    0 0
+  );
+  /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+  transition: clip-path var(--transDuration) var(--transCurve);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
+
+  &>a { /* Flex items behave like block-level elements */
+    color: black;
+    font-size: 1.5rem;
+    height: 2rem;
+  }
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0.5px 0.5px 16px black;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
+  animation-name: backInLeft; /* 2D stacking context of level */
+  animation-timing-function: ease-out;
+}
+
+/* When the navToggler is checked */
+input#navToggler:checked {
+  &~div#navHeader {
+    &>label[for="navToggler"] {
+      transform: rotateZ(-180deg);
+
+      &>span {
+        background-color: var(--secondaryColor);
+        transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
+
+        &:nth-child(1) {
+          /* Translation first, otherwise the transform-origin skewes the translation after rotation */
+          transform: translateY(calc(var(--line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
+        }
+
+        &:nth-child(2) { /* Central span becomes opaque, with no delay */
+          opacity: 0; 
+        }
+   
+        &:nth-child(3) { ;
+          transform: translateY(calc(var(--line) * -2)) rotate(45deg);
+        }
+      }
+    }  
+  }
+
+  &~nav#navbar {
+    clip-path: polygon( /* Flipping triangles */
+      100% 100%,
+      0 100%,
+      100% 100%,
+      100% 0,
+      0 0,
+      0 100%,
+      100% 100%
+    ); 
+  }
+}
+
+main {
+  padding: 10%; /* 10% of its width */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+p {
+  &:not(:first-of-type) {
+    margin-top: 1rem; 
+  }
+}
+
+/* Keyframe animations */
+@keyframes backInLeft {
+  0% {
+    transform: translateX(-100vw) scale(0.7);
+    opacity: 0.7;
+  }
+
+  80% {
+    transform: translateX(0) scale(0.7);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+} 
