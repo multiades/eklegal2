@@ -1,0 +1,229 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
+
+html,
+body {
+  /* The default behavior for block-level elements is width: 100%; */
+  height: 100%;
+}
+  
+body {
+  /* Hereditary properties */
+  font-family: 'Advent Pro', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  font-size: medium;
+}
+  
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to use :hover, it is evident */
+}
+  	    
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+
+header {
+  --transDuration: 800ms; /* trans @ transition */
+  --transCurve: ease-in-out; 
+  --opacDelay: 200ms; /* opac @ opacity */
+  --logoWidth: 130px; /* Original png is 780x426, both dimensions divisible by 6 */
+  --logoHeight: 71px;
+  --vertGap: 16px; /* vert @ vertical */
+  --horizGap: 16px; /* horiz @ horizontal */
+
+  height: 100%;
+  background: url('../../assets/images/hall.jpg') center/cover no-repeat; /* fixed; Background attachment is fixed; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+div#navHeader {
+  --bgColor: #f2f3f4;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1; /* Stack on top of subsequent elements that create a stacking context at the base z-index 0 */
+  width: 100%; /* Mandatory, don't know why */
+  height: 100%;
+  background-color: var(--bgColor);
+  /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+  transition: clip-path var(--transDuration) var(--transCurve);
+  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar contant to fade out */
+  clip-path: polygon(
+    0 0,
+    calc(var(--logoWidth) + var(--horizGap)) 0,
+    calc(var(--logoWidth) + 2 * var(--horizGap)) var(--vertGap),
+    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--vertGap) + var(--logoHeight)),
+    calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
+    0 calc(var(--logoHeight) + 2 * var(--vertGap)),
+    0 0
+  );
+
+  &>img.logo {
+    display: block; /* To respect dimensions and margins */
+    width: var(--logoWidth);
+    height: var(--logoHeight);
+    margin-top: var(--vertGap); /* Do it like this to avoid padding on div#navHeader */
+    margin-left: var(--horizGap);
+  }
+}
+
+nav#navbar {
+  --topMargin: calc(var(--logoHeight) + 2 * var(--vertGap) + 0px); /**/ 
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2; /* Above div#navHeader */
+  width: 100%; 
+  height: calc(100dvh - var(--topMargin)); /* dvh units return pixels */
+  margin-top: var(--topMargin);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  row-gap: 0.75rem;
+  opacity: 0;
+  transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
+  transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
+
+  &>a { /* Flex items behave like block-level elements */
+    flex-shrink: 0; /* All descendant flex anchor items won't get squished (scootched) on overflows */
+    user-select: none; /* Can't highlight anything, non inheritable */
+    color: black;
+    font-size: 1.5rem;
+    height: 2rem;
+  }
+}
+
+label[for="navToggler"] {
+  --line: 5px;
+  --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
+  --primaryColor: black;
+  --secondaryColor: red;
+  --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
+ 
+  width: var(--labelDim);
+  height: var(--labelDim);
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: var(--line);
+  /* The label has no delay in both states, more aesthetic this way */
+  transition: transform var(--transDuration) var(--transCurve);
+  
+  &>span {
+    width: 100%; /* Flex items always respect dimensions */
+    height: var(--line);
+    /* The animation is suffering if only transform, opacity and bg-color are transitioned on*/
+    transition: all calc(var(--transDuration) / 2) var(--transCurve); /* Half the label rotation's duration */
+    transition-delay: 0s; 
+    background-color: var(--primaryColor);
+  }
+}
+
+h1 {
+  margin-bottom: 32px;
+  margin-left: 32px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0.5px 0.5px 16px black;
+  animation-duration: 1.2s;
+  animation-iteration-count: 1;
+  animation-name: backInLeft;
+  animation-timing-function: ease-out;
+}
+
+/* When the navToggler is checked */
+input#navToggler:checked {
+  &~div#navHeader {
+    transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
+    clip-path: polygon(
+      100% 0,
+      0 0,
+      0 var(--vertGap),
+      0 calc(var(--vertGap) + var(--logoHeight)),
+      0 100%,
+      100% 100%,
+      100% 0
+    );
+  }
+
+  &~nav#navbar {
+    transition-delay: var(--transDuration); /* When navToggler is previously unchecked, wait for div#navHeader's transition */ 
+    opacity: 1;
+  }
+
+  &~label[for="navToggler"] {
+    transform: rotate(-180deg);
+
+    &>span {
+      background-color: var(--secondaryColor);
+      transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
+
+      &:nth-child(1) {
+        /* Translation first, otherwise the transform-origin skewes the translation after rotation */
+        transform: translateY(calc(var(--line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
+      }
+
+        &:nth-child(2) { /* Central span becomes opaque, with no delay */
+          opacity: 0; 
+        }
+   
+        &:nth-child(3) { ;
+          transform: translateY(calc(var(--line) * -2)) rotate(45deg);
+        }
+      }
+    }  
+}
+
+main {
+  padding: 10%; /* 10% of its width */
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+p {
+  &:not(:first-of-type) {
+    margin-top: 1rem; 
+  }
+}
+
+/* Keyframe animations */
+@keyframes backInLeft {
+  0% {
+    transform: translateX(-100vw) scale(0.7);
+    opacity: 0.7;
+  }
+
+  80% {
+    transform: translateX(0) scale(0.7);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+} 	
