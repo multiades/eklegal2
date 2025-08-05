@@ -38,7 +38,7 @@ header {
   --transCurve: ease-in-out; 
 
   height: 100%;
-  background: url('../../assets/images/hall.jpg') center/cover no-repeat fixed; /* Background attachment is fixed; */
+  background: url('../../assets/images/hall.jpg') center/cover no-repeat; /* fixed Background attachment is fixed; */
   padding: 0 32px 48px;
   display: flex;
   flex-direction: column;
