@@ -35,7 +35,7 @@ header {
   --horizGap: 16px; /* horiz @ horizontal */
 
   /* Block level elements get width: 100% by default; the html and body as well */
-  height: 100dvh;
+  height: 100svh;
   background: url('../../assets/images/hall.jpg') center/cover no-repeat; /* fixed; Background attachment is fixed; */
   display: flex;
   flex-direction: column;
@@ -58,11 +58,11 @@ div#navHeader {
   transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar contant to fade out */
   clip-path: polygon(
     0 0,
-    calc(var(--logoWidth) + var(--horizGap)) 0,
-    calc(var(--logoWidth) + 2 * var(--horizGap)) var(--vertGap),
+    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
     calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--vertGap) + var(--logoHeight)),
     calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
-    0 calc(var(--logoHeight) + 2 * var(--vertGap)),
+    32px calc(var(--logoHeight) + 2 * var(--vertGap)),
+    0 calc(var(--logoHeight) + 2 * var(--vertGap) + 32px),
     0 0
   );
 
@@ -154,9 +154,9 @@ input#navToggler:checked {
     clip-path: polygon(
       100% 0,
       0 0,
-      0 var(--vertGap),
-      0 calc(var(--vertGap) + var(--logoHeight)),
+      0 calc(var(--logoHeight) + (var(--vertGap)),
       0 100%,
+      calc(100% - 32px) 100%,
       100% 100%,
       100% 0
     );
