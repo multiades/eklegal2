@@ -4,6 +4,11 @@
   padding: 0;	
 }
   
+html,
+body { /* Most browsers scroll on html, some mobile ones may do it on body */
+  overscroll-behavior: none; /* Supress scroll chaining and jumping on mobile browsers */
+}
+
 body {
   /* Hereditary properties */
   font-family: 'Advent Pro', sans-serif;
@@ -43,15 +48,29 @@ header {
   align-items: flex-start;
 }
 
+/*
+div#scrollBlocker {
+  display: none;
+  position: fixed;
+  overflow: hidden;
+  overscroll-behavior: contain; 
+  inset: 0; Shorthand for top, bottom, left, right: 0, to make sure it covers every screen completely 
+  z-index: 1; Above main and footer and below everything  else  
+  background-color: rgba(0 , 0, 0, 0.4);  
+  touch-action: none; Prevent pinch zoom and scroll
+  pointer-events: all; Intercept all pointer input, don't let clicks fall through
+}
+*/
+
 div#navHeader {
   --bgColor: #f2f3f4;
 
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1; /* Stack on top of subsequent elements that create a stacking context at the base z-index 0 */
+  z-index: 2; /* Above div#scrollBlocker */
   width: 100%; /* Mandatory, don't know why */
-  height: 100%;
+  height: 100dvh; /* Dynamically cover the viewport at every position */
   background-color: var(--bgColor);
   /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
   transition: clip-path var(--transDuration) var(--transCurve);
@@ -76,12 +95,12 @@ div#navHeader {
 }
 
 nav#navbar {
-  --topMargin: calc(var(--logoHeight) + 2 * var(--vertGap) + 0px); /**/ 
+  --topMargin: calc(var(--logoHeight) + 2 * var(--vertGap) + 32px); /**/ 
 
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2; /* Above div#navHeader */
+  z-index: 3; /* Above div#navHeader */
   width: 100%; 
   height: calc(100dvh - var(--topMargin)); /* dvh units return pixels */
   margin-top: var(--topMargin);
@@ -106,7 +125,7 @@ nav#navbar {
 label[for="navToggler"] {
   --line: 5px;
   --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
-  --primaryColor: black;
+  --primaryColor: #999;
   --secondaryColor: red;
   --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
  
@@ -115,7 +134,7 @@ label[for="navToggler"] {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 2;
+  z-index: 4; /* Above nav#navbar */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -149,6 +168,12 @@ h1 {
 
 /* When the navToggler is checked */
 input#navToggler:checked {
+  /*
+  &~div#scrollBlocker {
+    display: block;
+  }
+  */
+
   &~div#navHeader {
     transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
     clip-path: polygon(
@@ -191,7 +216,7 @@ input#navToggler:checked {
 }
 
 main {
-  padding: 10%; /* 10% of its width */
+  padding: 48px 10%; /* 10% of its width, even if a percentage is udes for the vertical padding */
 }
 
 h2 {
