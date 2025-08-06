@@ -36,7 +36,7 @@ header {
 
   /* Block level elements get width: 100% by default; the html and body as well */
   height: 100svh;
-  background: url('../../assets/images/hall.jpg') center/cover no-repeat; /* fixed; Background attachment is fixed; */
+  background: url('../../assets/images/hall.jpg') center/cover no-repeat fixed; /* Background attachment is fixed; */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
