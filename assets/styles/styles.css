@@ -3,14 +3,15 @@
   margin: 0;
   padding: 0;	
 }
-  
+
+/* Block level elements get width: 100% by default.
+Most browsers scroll on html, some mobile ones may do it on body */
 html,
-body { /* Most browsers scroll on html, some mobile ones may do it on body */
-  overscroll-behavior: none; /* Supress scroll chaining and jumping on mobile browsers */
+body {
+  overscroll-behavior: none; /* Supress scroll chaining events an rubber band bouncing  */
 }
 
 body {
-  /* Hereditary properties */
   font-family: 'Advent Pro', sans-serif;
   font-optical-sizing: auto;
   font-weight: normal;
@@ -23,7 +24,7 @@ a,
 label[for],
 button {
   cursor: pointer; /* No need to use :hover, it is evident */
-}
+} /* Maybe do that on fine pointer media */
   	    
 a {
   font-style: normal;
@@ -31,6 +32,22 @@ a {
 } 
 
 header {
+  height: 100svh; /* The smallest viewport */
+  padding-top: calc(100svh - 6rem); /* To place h1 */
+  padding-left: 2rem; /* To place h1 */
+  background: url('../../assets/images/hall.jpg') center/cover no-repeat;
+}
+
+div#scrollBlocker {
+  display: none; /* If navbar is collapsed */
+  position: fixed;
+  inset: 0; /* Shorthand for top, right, bottom, left: 0 */  
+  z-index: 1; /* Above subsequent elements that might create a stacking context at base z-index 0 */
+  pointer-events: auto; /* Capture all events, don't let them fall through */
+  touch-action: none; /* For crude pointers, touch screens */
+}
+
+nav#navbar {
   --transDuration: 800ms; /* trans @ transition */
   --transCurve: ease-in-out; 
   --opacDelay: 200ms; /* opac @ opacity */
@@ -38,43 +55,19 @@ header {
   --logoHeight: 71px;
   --vertGap: 16px; /* vert @ vertical */
   --horizGap: 16px; /* horiz @ horizontal */
-
-  /* Block level elements get width: 100% by default; the html and body as well */
-  height: 100svh;
-  background: url('../../assets/images/hall.jpg') center/cover no-repeat;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
-
-/*
-div#scrollBlocker {
-  display: none;
-  position: fixed;
-  overflow: hidden;
-  overscroll-behavior: contain; 
-  inset: 0; Shorthand for top, bottom, left, right: 0, to make sure it covers every screen completely 
-  z-index: 1; Above main and footer and below everything  else  
-  background-color: rgba(0 , 0, 0, 0.4);  
-  touch-action: none; Prevent pinch zoom and scroll
-  pointer-events: all; Intercept all pointer input, don't let clicks fall through
-}
-*/
-
-div#navHeader {
-  --bgColor: #f2f3f4;
+  --bgColor: #333;
+  --navHeaderHeight: calc(var(--logoHeight) + 2 * var(--vertGap));
 
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2; /* Above div#scrollBlocker */
+  z-index: 2; /* Above div#scrollBlocker */  
   width: 100%; /* Mandatory, don't know why */
   height: 100dvh; /* Dynamically cover the viewport at every position */
   background-color: var(--bgColor);
   /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
   transition: clip-path var(--transDuration) var(--transCurve);
-  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar contant to fade out */
+  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar content to fade out */
   clip-path: polygon(
     0 0,
     calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
@@ -85,56 +78,54 @@ div#navHeader {
     0 0
   );
 
-  &>img.logo {
-    display: block; /* To respect dimensions and margins */
-    width: var(--logoWidth);
-    height: var(--logoHeight);
-    margin-top: var(--vertGap); /* Do it like this to avoid padding on div#navHeader */
-    margin-left: var(--horizGap);
+  &>div#navHeader {
+    height: var(--navHeaderHeight);
+    padding: var(--vertGap) 0 var(--vertGap) var(--horizGap); 		
+    &>img { 
+      display: block; 
+      width: var(--logoWidth);
+      height: var(--logoHeight);
+    }
   }
-}
 
-nav#navbar {
-  --topMargin: calc(var(--logoHeight) + 2 * var(--vertGap) + 32px); /**/ 
+  &>div#navMain {
+    height: calc(100% - var(--navHeaderHeight));
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    row-gap: 0.75rem;
+    overflow-y: auto;
+    overscroll-behavior: contain; /* It is like a valce, I need to close it on this end, as well as at the body's level */
+    -webkit-overflow-scrolling: touch; /* Vendor prefixed property for smooth scrolling on webkit browsers */
+    opacity: 0;
+    transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
+    transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 3; /* Above div#navHeader */
-  width: 100%; 
-  height: calc(100dvh - var(--topMargin)); /* dvh units return pixels */
-  margin-top: var(--topMargin);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  row-gap: 0.75rem;
-  opacity: 0;
-  transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
-  transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
-
-  &>a { /* Flex items behave like block-level elements */
-    flex-shrink: 0; /* All descendant flex anchor items won't get squished (scootched) on overflows */
-    user-select: none; /* Can't highlight anything, non inheritable */
-    color: black;
-    font-size: 1.5rem;
-    height: 2rem;
+    &>a {
+      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
+      user-select: none; /* Can't highlight anything, non inheritable */
+      color: white;
+      font-size: 1.5rem;
+      height: 2rem;
+    }
   }
 }
 
 label[for="navToggler"] {
   --line: 5px;
   --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
-  --primaryColor: black;
+  --primaryColor: green;
   --secondaryColor: red;
   --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
- 
+  --transCurve: ease-in-out;
+  
   width: var(--labelDim);
   height: var(--labelDim);
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 4; /* Above nav#navbar */
+  z-index: 3; /* Above nav#navbar */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -146,16 +137,14 @@ label[for="navToggler"] {
   &>span {
     width: 100%; /* Flex items always respect dimensions */
     height: var(--line);
-    /* The animation is suffering if only transform, opacity and bg-color are transitioned on*/
+    /* The animation may suffer if transform, opacity and bg-color are solely transitioned on*/
     transition: all calc(var(--transDuration) / 2) var(--transCurve); /* Half the label rotation's duration */
-    transition-delay: 0s; 
+    transition-delay: 0s; /* If navToggler was aleady checked, transition immediately */ 
     background-color: var(--primaryColor);
   }
 }
 
 h1 {
-  margin-bottom: 32px;
-  margin-left: 32px;
   font-size: 2rem;
   font-weight: bold;
   color: white;
@@ -168,14 +157,12 @@ h1 {
 
 /* When the navToggler is checked */
 input#navToggler:checked {
-  /*
   &~div#scrollBlocker {
     display: block;
   }
-  */
-
-  &~div#navHeader {
-    transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
+  
+  &~nav#navbar {
+    transition-delay: 0s; /* If navToggler is was already checked, transition immediately */
     clip-path: polygon(
       100% 0,
       0 0,
@@ -185,11 +172,11 @@ input#navToggler:checked {
       100% 100%,
       100% 0
     );
-  }
-
-  &~nav#navbar {
-    transition-delay: var(--transDuration); /* When navToggler is previously unchecked, wait for div#navHeader's transition */ 
-    opacity: 1;
+  
+    &>div#navMain {
+      transition-delay: var(--transDuration); /* If navToggler was unchecked, wait for navbar's expansion */ 
+      opacity: 1;
+    }
   }
 
   &~label[for="navToggler"] {
@@ -197,7 +184,10 @@ input#navToggler:checked {
 
     &>span {
       background-color: var(--secondaryColor);
-      transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
+
+      &:not(:nth-child(2)) {
+        transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
+      }
 
       &:nth-child(1) {
         /* Translation first, otherwise the transform-origin skewes the translation after rotation */
@@ -205,6 +195,7 @@ input#navToggler:checked {
       }
 
       &:nth-child(2) { /* Central span becomes opaque, with no delay */
+	transition-delay: calc(var(--transDuration) / 4); /* Start the opacity's transition a little sooner, we don't care about the bg color since the span becomes opaque */
         opacity: 0; 
       }
    
