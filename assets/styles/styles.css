@@ -1,290 +1,291 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;	
-}
+	  box-sizing: border-box;
+	  margin: 0;
+	  padding: 0;	
+	}
 
-/* Block level elements get width: 100% by default.
-Most browsers scroll on html, some mobile ones may do it on body */
-html,
-body {
-  overscroll-behavior: none; /* Supress scroll chaining events an rubber band bouncing  */
-}
+	/* Block level elements get width: 100% by default.
+	Most browsers scroll on html, some mobile ones may do it on body */
+	html,
+	body {
+	  overscroll-behavior: none; /* Supress scroll chaining events an rubber band bouncing  */
+	}
 
-body {
-  font-family: 'Advent Pro', sans-serif;
-  font-optical-sizing: auto;
-  font-weight: normal;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
-  font-size: medium;
-}
-  
-a,
-label[for],
-button {
-  cursor: pointer; /* No need to use :hover, it is evident */
-} /* Maybe do that on fine pointer media */
-  	    
-a {
-  font-style: normal;
-  text-decoration: none;  
-} 
+	body {
+	  font-family: 'Advent Pro', sans-serif;
+	  font-optical-sizing: auto;
+	  font-weight: normal;
+	  font-style: normal;
+	  font-variation-settings: "wdth" 100;
+	  font-size: medium;
+	}
+	  
+	a,
+	label[for],
+	button {
+	  cursor: pointer; /* No need to use :hover, it is evident */
+	} /* Maybe do that on fine pointer media */
+	  	    
+	a {
+	  font-style: normal;
+	  text-decoration: none;  
+	} 
 
-header {
-  height: 100svh; /* The smallest viewport */
-  padding-top: calc(100svh - 6rem); /* To place h1 */
-  padding-left: 2rem; /* To place h1 */
-  
-  &::before {
-    display: block;
-    content: '';
-    background: url('../images/hall.jpg') center/cover no-repeat;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100svh; /* 100% reverts to 100dvh here for some reason */
-    object-fit: contain; /* Need dimensions for this */
-    z-index: -2; /* Below all other content, a hack for a fixed background-attachment */
-  }
-}
+	header {
+	  height: 100svh; /* The smallest viewport */
+	  padding-top: calc(100svh - 6rem); /* To place h1 */
+	  padding-left: 2rem; /* To place h1 */
+	  overflow: hidden; */
 
-  /*pointer-events: auto; Capture all events, don't let them fall through 
-  touch-action: none; */ 
+	  &::before {
+	    display: block;
+	    content: '';
+	    background: url('../images/hall.jpg') center/cover no-repeat;
+	    position: fixed;
+	    top: 0;
+	    left: 0;
+	    width: 100vw;
+	    height: 100lvh; /* 100% reverts to 100dvh here for some reason, need lvh for bg images so as they don't move on scroll */
+	    object-fit: contain; /* Need dimensions for this */
+	    z-index: -2; /* Below all other content, a hack for a fixed background-attachment */
+	  }
+	}
 
-nav#navbar {
-  --transDuration: 800ms; /* trans @ transition */
-  --transCurve: ease-in-out; 
-  --opacDelay: 200ms; /* opac @ opacity */
-  --logoWidth: 130px; /* Original png is 780x426, both dimensions divisible by 6 */
-  --logoHeight: 71px;
-  --vertGap: 16px; /* vert @ vertical */
-  --horizGap: 16px; /* horiz @ horizontal */
-  --bgColor: #333;
+	  /*pointer-events: auto; Capture all events, don't let them fall through 
+	  touch-action: none; */ 
 
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1; /* Above main's content at z-index 0 */  
-  width: 100%; /* Mandatory, don't know why */
-  height: 100dvh; /* Dynamically cover the viewport at every position */
-  background-color: var(--bgColor);
-  /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
-  transition: clip-path var(--transDuration) var(--transCurve);
-  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar content to fade out */
-  clip-path: polygon(
-    0 0,
-    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
-    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--vertGap) + var(--logoHeight)),
-    calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
-    32px calc(var(--logoHeight) + 2 * var(--vertGap)),
-    0 calc(var(--logoHeight) + 2 * var(--vertGap) + 32px),
-    0 0
-  );
+	nav#navbar {
+	  --transDuration: 800ms; /* trans @ transition */
+	  --transCurve: ease-in-out; 
+	  --opacDelay: 200ms; /* opac @ opacity */
+	  --logoWidth: 130px; /* Original png is 780x426, both dimensions divisible by 6 */
+	  --logoHeight: 71px;
+	  --vertGap: 16px; /* vert @ vertical */
+	  --horizGap: 16px; /* horiz @ horizontal */
+	  --bgColor: #333;
 
-  &>img#logo { 
-    display: block; 
-    width: var(--logoWidth); /* No need for object-fit, dimensions are calculated */
-    height: var(--logoHeight);
-    margin-top: var(--vertGap);
-    margin-left: var(--horizGap); 
-  }
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  z-index: 1; /* Above main's content at z-index 0 */  
+	  width: 100%; /* Mandatory, don't know why */
+	  height: 100dvh; /* Dynamically cover the viewport at every position */
+	  background-color: var(--bgColor);
+	  /* Transition on GPU-accelerated clip-path instead of CPU-intensive height that causes document reflow */
+	  transition: clip-path var(--transDuration) var(--transCurve);
+	  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar content to fade out */
+	  clip-path: polygon(
+	    0 0,
+	    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
+	    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--vertGap) + var(--logoHeight)),
+	    calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
+	    32px calc(var(--logoHeight) + 2 * var(--vertGap)),
+	    0 calc(var(--logoHeight) + 2 * var(--vertGap) + 32px),
+	    0 0
+	  );
 
-  &>ul#links {
-    height: calc(100% - var(--logoHeight) - 2 * var(--vertGap));
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    row-gap: 0.75rem;
-    list-style: none;
-    overflow-y: auto;
-    overscroll-behavior: contain; /* It is like a valce, I need to close it on this end, as well as at the body's level */
-    -webkit-overflow-scrolling: touch; /* Vendor prefixed property for smooth scrolling on webkit browsers */
-    opacity: 0;
-    transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
-    transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
+	  &>img#logo { 
+	    display: block; 
+	    width: var(--logoWidth); /* No need for object-fit, dimensions are calculated */
+	    height: var(--logoHeight);
+	    margin-top: var(--vertGap);
+	    margin-left: var(--horizGap); 
+	  }
 
-    &>li {
-      font-size: 1.5rem;
-      height: 2rem;
-      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
-      &>a {
-	user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
-        color: white;
-      }
-    }
-  }
-}
+	  &>ul#links {
+	    height: calc(100% - var(--logoHeight) - 2 * var(--vertGap));
+	    display: flex;
+	    flex-direction: column;
+	    justify-content: flex-start;
+	    align-items: center;
+	    row-gap: 0.75rem;
+	    list-style: none;
+	    overflow-y: auto;
+	    overscroll-behavior: contain; /* It is like a valce, I need to close it on this end, as well as at the body's level */
+	    -webkit-overflow-scrolling: touch; /* Vendor prefixed property for smooth scrolling on webkit browsers */
+	    opacity: 0;
+	    transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
+	    transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
 
-label[for="navToggler"] {
-  --line: 5px;
-  --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
-  --primaryColor: green;
-  --secondaryColor: red;
-  --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
-  --transCurve: ease-in-out;
-  
-  width: var(--labelDim);
-  height: var(--labelDim);
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 2; /* Above nav#navbar */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  row-gap: var(--line);
-  /* The label has no delay in both states, more aesthetic this way */
-  transition: transform var(--transDuration) var(--transCurve);
-  
-  &>span {
-    width: 100%; /* Flex items always respect dimensions */
-    height: var(--line);
-    /* The animation may suffer if transform, opacity and bg-color are solely transitioned on*/
-    transition: all calc(var(--transDuration) / 2) var(--transCurve); /* Half the label rotation's duration */
-    transition-delay: 0s; /* If navToggler was aleady checked, transition immediately */ 
-    background-color: var(--primaryColor);
-  }
-}
+	    &>li {
+	      font-size: 1.5rem;
+	      height: 2rem;
+	      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
+	      &>a {
+		user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
+		color: white;
+	      }
+	    }
+	  }
+	}
 
-h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: white;
-  text-shadow: 0.5px 0.5px 16px black;
-  animation-duration: 1.2s;
-  animation-iteration-count: 1;
-  animation-name: backInLeft;
-  animation-timing-function: ease-out;
-}
+	label[for="navToggler"] {
+	  --line: 5px;
+	  --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
+	  --primaryColor: green;
+	  --secondaryColor: red;
+	  --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
+	  --transCurve: ease-in-out;
+	  
+	  width: var(--labelDim);
+	  height: var(--labelDim);
+	  position: fixed;
+	  bottom: 24px;
+	  right: 24px;
+	  z-index: 2; /* Above nav#navbar */
+	  display: flex;
+	  flex-direction: column;
+	  justify-content: flex-start;
+	  align-items: flex-start;
+	  row-gap: var(--line);
+	  /* The label has no delay in both states, more aesthetic this way */
+	  transition: transform var(--transDuration) var(--transCurve);
+	  
+	  &>span {
+	    width: 100%; /* Flex items always respect dimensions */
+	    height: var(--line);
+	    /* The animation may suffer if transform, opacity and bg-color are solely transitioned on*/
+	    transition: all calc(var(--transDuration) / 2) var(--transCurve); /* Half the label rotation's duration */
+	    transition-delay: 0s; /* If navToggler was aleady checked, transition immediately */ 
+	    background-color: var(--primaryColor);
+	  }
+	}
 
-/* When the navToggler is checked */
-input#navToggler:checked {
-  &~nav#navbar {
-    transition-delay: 0s; /* If navToggler is was already checked, transition immediately */
-    clip-path: polygon(
-      100% 0,
-      0 0,
-      0 calc(var(--logoHeight) + var(--vertGap)),
-      0 100%,
-      calc(100% - 32px) 100%,
-      100% 100%,
-      100% 0
-    );
-  
-    &>ul#links {
-      transition-delay: var(--transDuration); /* If navToggler was unchecked, wait for navbar's expansion */ 
-      opacity: 1;
-    }
-  }
+	h1 {
+	  font-size: 2rem;
+	  font-weight: bold;
+	  color: white;
+	  text-shadow: 0.5px 0.5px 16px black;
+	  animation-duration: 1.2s;
+	  animation-iteration-count: 1;
+	  animation-name: backInLeft;
+	  animation-timing-function: ease-out;
+	}
 
-  &~label[for="navToggler"] {
-    transform: rotate(-180deg);
+	/* When the navToggler is checked */
+	input#navToggler:checked {
+	  &~nav#navbar {
+	    transition-delay: 0s; /* If navToggler is was already checked, transition immediately */
+	    clip-path: polygon(
+	      100% 0,
+	      0 0,
+	      0 calc(var(--logoHeight) + var(--vertGap)),
+	      0 100%,
+	      calc(100% - 32px) 100%,
+	      100% 100%,
+	      100% 0
+	    );
+	  
+	    &>ul#links {
+	      transition-delay: var(--transDuration); /* If navToggler was unchecked, wait for navbar's expansion */ 
+	      opacity: 1;
+	    }
+	  }
 
-    &>span {
-      background-color: var(--secondaryColor);
+	  &~label[for="navToggler"] {
+	    transform: rotate(-180deg);
 
-      &:not(:nth-child(2)) {
-        transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
-      }
+	    &>span {
+	      background-color: var(--secondaryColor);
 
-      &:nth-child(1) {
-        /* Translation first, otherwise the transform-origin skewes the translation after rotation */
-        transform: translateY(calc(var(--line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
-      }
+	      &:not(:nth-child(2)) {
+		transition-delay: calc(var(--transDuration) / 2); /* Waiting for half and not the whole of label rotation's duration for smoothness */
+	      }
 
-      &:nth-child(2) { /* Central span becomes opaque, with no delay */
-	transition-delay: calc(var(--transDuration) / 4); /* Start the opacity's transition a little sooner, we don't care about the bg color since the span becomes opaque */
-        opacity: 0; 
-      }
-   
-      &:nth-child(3) {
-        transform: translateY(calc(var(--line) * -2)) rotate(45deg);
-      }
-    }
-  }  
-}
+	      &:nth-child(1) {
+		/* Translation first, otherwise the transform-origin skewes the translation after rotation */
+		transform: translateY(calc(var(--line) * 2)) rotate(-45deg); /* Aligning its center with the label's */
+	      }
 
-main {
-  --vertGap: 48px; /* To avoid padding, aiding the bg image */
-  --horizGap: 8vw;
+	      &:nth-child(2) { /* Central span becomes opaque, with no delay */
+		transition-delay: calc(var(--transDuration) / 4); /* Start the opacity's transition a little sooner, we don't care about the bg color since the span becomes opaque */
+		opacity: 0; 
+	      }
+	   
+	      &:nth-child(3) {
+		transform: translateY(calc(var(--line) * -2)) rotate(45deg);
+	      }
+	    }
+	  }  
+	}
 
-  position: relative; /* Creating a point of reference */
-  
-  &::before {
-    display: block;
-    content: '';
-    background: url('../images/lille.jpg') center/cover no-repeat;
-    position: sticky;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100svh;
-    object-fit: contain; /* Need dimensions for this */
-    z-index: -1; /* Above header's bg image */
-  }
-}
+	main {
+	  --vertGap: 48px; /* To avoid padding, aiding the bg image */
+	  --horizGap: 8vw;
 
-section {
-  /* position: relative; Need it to create stacking contexts */
-  z-index: 0; /* Above main's bg image */
-  min-height: 100svh; /* To avoid interlloping on main's bg image */
-  padding: var(--vertGap) var(--horizGap);
+	  position: relative; /* Creating a point of reference */
+	  
+	  &::before {
+	    display: block;
+	    content: '';
+	    background: url('../images/lille.jpg') center/cover no-repeat;
+	    position: sticky;
+	    top: 0;
+	    left: 0;
+	    width: 100vw;
+	    height: 100lvh;
+	    object-fit: contain; /* Need dimensions for this */
+	    z-index: -1; /* Above header's bg image */
+	  }
+	}
 
-  &#company {
-    background-color: white;  
-    margin-top: -100svh; /* To align with main bg image's top */
-  }
+	section {
+	  z-index: 0; /* Above main's bg image */
+	  min-height: 100lvh; /* To avoid interlloping on main's bg image */
+	  padding: var(--vertGap) var(--horizGap);
 
-  &#sectors {
-  }
+	  &#company {
+	    background-color: white;  
+	    margin-top: -100lvh; /* To align with main bg image's top */
+	  }
 
-  &#aboutUs {
-    background-color: white;
-    
-    &>img {
-      display: block;
-      width: min(768px, 80vw);  /* Use 80vw on narrow screens */
-      height: auto;  /*No need for object-fit since height is auto */
-      border-radius: 16px;
-      box-shadow: 0 0 8px 0 #333;
-    }
-  }
-}
+	  &#sectors {
+	    color: white;
+	  }
 
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+	  &#aboutUs {
+	    background-color: white;
+	    
+	    &>img {
+	      display: block;
+	      width: min(768px, 80vw);  /* Use 80vw on narrow screens */
+	      height: auto;  /*No need for object-fit since height is auto */
+	      border-radius: 16px;
+	      box-shadow: 0 0 8px 0 #333;
+	    }
+	  }
+	}
 
-p {
-  &:not(:first-of-type) {
-    margin-top: 1rem; 
-  }
-}
+	h2 {
+	  text-align: center;
+	  margin-bottom: 2rem;
+	}
 
-footer {
-  min-height: 100lvh; /* The largest viewport, the bar tools are out of the way when scrolling down */
-  background-color: #999;
-}
+	p {
+	  &:not(:first-of-type) {
+	    margin-top: 1rem; 
+	  }
+	}
 
-/* Keyframe animations */
-@keyframes backInLeft {
-  0% {
-    transform: translateX(-100vw) scale(0.7);
-    opacity: 0.7;
-  }
+	footer {
+	  min-height: 100lvh; /* The largest viewport, the bar tools are out of the way when scrolling down */
+	  background-color: #999;
+	}
 
-  80% {
-    transform: translateX(0) scale(0.7);
-    opacity: 0.7;
-  }
+	/* Keyframe animations */
+	@keyframes backInLeft {
+	  0% {
+	    transform: translateX(-100vw) scale(0.7);
+	    opacity: 0.7;
+	  }
 
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-} 	
+	  80% {
+	    transform: translateX(0) scale(0.7);
+	    opacity: 0.7;
+	  }
+
+	  100% {
+	    transform: scale(1);
+	    opacity: 1;
+	  }
+	} 	
