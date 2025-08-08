@@ -35,7 +35,6 @@
 	  height: 100svh; /* The smallest viewport */
 	  padding-top: calc(100svh - 6rem); /* To place h1 */
 	  padding-left: 2rem; /* To place h1 */
-	  overflow: hidden; */
 
 	  &::before {
 	    display: block;
