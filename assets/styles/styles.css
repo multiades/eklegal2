@@ -35,17 +35,23 @@ header {
   height: 100svh; /* The smallest viewport */
   padding-top: calc(100svh - 6rem); /* To place h1 */
   padding-left: 2rem; /* To place h1 */
-  background: url('../../assets/images/hall.jpg') center/cover no-repeat;
+  
+  &::before {
+    display: block;
+    content: '';
+    background: url('../images/hall.jpg') center/cover no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100%;
+    object-fit: contain; /* Need dimensions for this */
+    z-index: -2; /* Below all other content, a hack for a fixed background-attachment */
+  }
 }
 
-div#scrollBlocker {
-  display: none; /* If navbar is collapsed */
-  position: fixed;
-  inset: 0; /* Shorthand for top, right, bottom, left: 0 */  
-  z-index: 1; /* Above subsequent elements that might create a stacking context at base z-index 0 */
-  pointer-events: auto; /* Capture all events, don't let them fall through */
-  touch-action: none; /* For crude pointers, touch screens */
-}
+  /*pointer-events: auto; Capture all events, don't let them fall through 
+  touch-action: none; */ 
 
 nav#navbar {
   --transDuration: 800ms; /* trans @ transition */
@@ -56,12 +62,11 @@ nav#navbar {
   --vertGap: 16px; /* vert @ vertical */
   --horizGap: 16px; /* horiz @ horizontal */
   --bgColor: #333;
-  --navHeaderHeight: calc(var(--logoHeight) + 2 * var(--vertGap));
 
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2; /* Above div#scrollBlocker */  
+  z-index: 1; /* Above main's content at z-index 0 */  
   width: 100%; /* Mandatory, don't know why */
   height: 100dvh; /* Dynamically cover the viewport at every position */
   background-color: var(--bgColor);
@@ -78,23 +83,22 @@ nav#navbar {
     0 0
   );
 
-  &>div#navHeader {
-    height: var(--navHeaderHeight);
-    padding: var(--vertGap) 0 var(--vertGap) var(--horizGap); 		
-    &>img { 
-      display: block; 
-      width: var(--logoWidth);
-      height: var(--logoHeight);
-    }
+  &>img#logo { 
+    display: block; 
+    width: var(--logoWidth); /* No need for object-fit, dimensions are calculated */
+    height: var(--logoHeight);
+    margin-top: var(--vertGap);
+    margin-left: var(--horizGap); 
   }
 
-  &>div#navMain {
-    height: calc(100% - var(--navHeaderHeight));
+  &>ul#links {
+    height: calc(100% - var(--logoHeight) - 2 * var(--vertGap));
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     row-gap: 0.75rem;
+    list-style: none;
     overflow-y: auto;
     overscroll-behavior: contain; /* It is like a valce, I need to close it on this end, as well as at the body's level */
     -webkit-overflow-scrolling: touch; /* Vendor prefixed property for smooth scrolling on webkit browsers */
@@ -102,12 +106,14 @@ nav#navbar {
     transition: opacity var(--opacDelay) var(--transCurve); /* Use opacDelay as the transition's duration */
     transition-delay: 0s; /* When navToggler is previously checked, transition immediately */
 
-    &>a {
-      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
-      user-select: none; /* Can't highlight anything, non inheritable */
-      color: white;
+    &>li {
       font-size: 1.5rem;
       height: 2rem;
+      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
+      &>a {
+	user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
+        color: white;
+      }
     }
   }
 }
@@ -125,7 +131,7 @@ label[for="navToggler"] {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  z-index: 3; /* Above nav#navbar */
+  z-index: 2; /* Above nav#navbar */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -157,10 +163,6 @@ h1 {
 
 /* When the navToggler is checked */
 input#navToggler:checked {
-  &~div#scrollBlocker {
-    display: block;
-  }
-  
   &~nav#navbar {
     transition-delay: 0s; /* If navToggler is was already checked, transition immediately */
     clip-path: polygon(
@@ -173,7 +175,7 @@ input#navToggler:checked {
       100% 0
     );
   
-    &>div#navMain {
+    &>ul#links {
       transition-delay: var(--transDuration); /* If navToggler was unchecked, wait for navbar's expansion */ 
       opacity: 1;
     }
@@ -207,7 +209,50 @@ input#navToggler:checked {
 }
 
 main {
-  padding: 48px 10%; /* 10% of its width, even if a percentage is udes for the vertical padding */
+  --vertGap: 48px; /* To avoid padding, aiding the bg image */
+  --horizGap: 8vw;
+
+  position: relative; /* Creating a point of reference */
+  
+  &::before {
+    display: block;
+    content: '';
+    background: url('../images/lille.jpg') center/cover no-repeat;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100svh;
+    object-fit: contain; /* Need dimensions for this */
+    z-index: -1; /* Above header's bg image */
+  }
+}
+
+section {
+  /* position: relative; Need it to create stacking contexts */
+  z-index: 0; /* Above main's bg image */
+  min-height: 100svh; /* To avoid interlloping on main's bg image */
+  padding: var(--vertGap) var(--horizGap);
+
+  &#company {
+    background-color: white;  
+    margin-top: -100svh; /* To align with main bg image's top */
+  }
+
+  &#sectors {
+  }
+
+  &#aboutUs {
+    background-color: white;
+    
+    &>img {
+      display: block;
+      width: min(768px, 80vw);  /* Use 80vw on narrow screens */
+      height: auto;  /*No need for object-fit since height is auto */
+      border-radius: 16px;
+      box-shadow: 0 0 8px 0 #333;
+    }
+  }
 }
 
 h2 {
@@ -219,6 +264,11 @@ p {
   &:not(:first-of-type) {
     margin-top: 1rem; 
   }
+}
+
+footer {
+  min-height: 100svh;
+  background-color: #999;
 }
 
 /* Keyframe animations */
