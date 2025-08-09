@@ -129,7 +129,7 @@
 	  width: var(--labelDim);
 	  height: var(--labelDim);
 	  position: fixed;
-	  bottom: 24px;
+	  top: 24px;
 	  right: 24px;
 	  z-index: 2; /* Above nav#navbar */
 	  display: flex;
@@ -213,6 +213,7 @@
 	  --horizGap: 8vw;
 
 	  position: relative; /* Creating a point of reference */
+   z-index: 0; /* Above the bg images */
 	  
 	  &::before {
 	    display: block;
@@ -229,13 +230,12 @@
 	}
 
 	section {
-	  z-index: 0; /* Above main's bg image */
-	  min-height: 100svh; /* To avoid interlloping on main's bg image */
+	  min-height: 100lvh; /* To avoid interlloping on main's bg image */
 	  padding: var(--vertGap) var(--horizGap);
 
 	  &#company {
 	    background-color: white;  
-	    margin-top: -100svh; /* To align with main bg image's top */
+	    margin-top: -100lvh; /* To align with main bg image's top */
 	  }
 
 	  &#sectors {
