@@ -213,7 +213,7 @@
 	  --vertGap: 48px; /* To avoid padding, aiding the bg image */
 	  --horizGap: 8vw;
 
-	  position: relative; /* Creating a point of reference */
+	  margin-top: -100svh;
    z-index: 0; /* Above the bg images */
 	  
 	  &::before {
@@ -236,7 +236,6 @@
 
 	  &#company {
 	    background-color: white;  
-	    margin-top: -100svh; 
 	  }
 
 	  &#sectors {
