@@ -12,7 +12,7 @@
 	}
 
 	body {
-	  font-family: 'Advent Pro', sans-serif;
+	  font-family: 'Open Sans', 'Advent Pro', sans-serif;
 	  font-optical-sizing: auto;
 	  font-weight: normal;
 	  font-style: normal;
@@ -76,9 +76,7 @@
 	  clip-path: polygon(
 	    0 0,
 	    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
-	    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--vertGap) + var(--logoHeight)),
 	    calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
-	    32px calc(var(--logoHeight) + 2 * var(--vertGap)),
 	    0 calc(var(--logoHeight) + 2 * var(--vertGap) + 32px),
 	    0 0
 	  );
@@ -121,15 +119,15 @@
 	label[for="navToggler"] {
 	  --line: 5px;
 	  --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
-	  --primaryColor: green;
-	  --secondaryColor: red;
+	  --primaryColor: black;
+	  --secondaryColor: black;
 	  --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
 	  --transCurve: ease-in-out;
 	  
 	  width: var(--labelDim);
 	  height: var(--labelDim);
 	  position: fixed;
-	  bottom: 24px;
+	  top: 24px;
 	  right: 24px;
 	  z-index: 2; /* Above nav#navbar */
 	  display: flex;
@@ -168,9 +166,7 @@
 	    clip-path: polygon(
 	      100% 0,
 	      0 0,
-	      0 calc(var(--logoHeight) + var(--vertGap)),
 	      0 100%,
-	      calc(100% - 32px) 100%,
 	      100% 100%,
 	      100% 0
 	    );
