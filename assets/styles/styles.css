@@ -61,7 +61,7 @@
 	  --logoHeight: 71px;
 	  --vertGap: 16px; /* vert @ vertical */
 	  --horizGap: 16px; /* horiz @ horizontal */
-	  --bgColor: #333;
+	  --bgColor: #ccc;
 
 	  position: fixed;
 	  top: 0;
@@ -76,8 +76,8 @@
 	  clip-path: polygon(
 	    0 0,
 	    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
-	    calc(var(--logoWidth) + var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
-	    0 calc(var(--logoHeight) + 2 * var(--vertGap) + 32px),
+	    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
+	    0 calc(var(--logoHeight) + 2 * var(--vertGap)),
 	    0 0
 	  );
 
@@ -109,8 +109,8 @@
 	      height: 2rem;
 	      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
 	      &>a {
-		user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
-		color: white;
+		    user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
+		    color: black;
 	      }
 	    }
 	  }
