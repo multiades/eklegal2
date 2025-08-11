@@ -32,22 +32,21 @@
 	} 
 
 	header {
-	  height: 200svh;
-	  padding-top: calc(200svh - 6rem); /* To place h1 */
+	  height: 100svh; /* The smallest viewport */
+	  padding-top: calc(100svh - 6rem); /* To place h1 */
 	  padding-left: 2rem; /* To place h1 */
-   position: relative;
 
 	  &::before {
 	    display: block;
 	    content: '';
 	    background: url('../images/hall.jpg') center/cover no-repeat;
-	    position: sticky;
+	    position: fixed;
 	    top: 0;
 	    left: 0;
 	    width: 100vw;
 	    height: 100svh; /* 100% reverts to 100dvh here for some reason */
 	    object-fit: contain; /* Need dimensions for this */
-	    z-index: -1; /* Below all other content, a hack for a fixed background-attachment */
+	    z-index: -2; /* Below all other content, a hack for a fixed background-attachment */
 	  }
 	}
 
@@ -130,7 +129,7 @@
 	  width: var(--labelDim);
 	  height: var(--labelDim);
 	  position: fixed;
-	  top: 24px;
+	  bottom: 24px;
 	  right: 24px;
 	  z-index: 2; /* Above nav#navbar */
 	  display: flex;
@@ -213,29 +212,30 @@
 	  --vertGap: 48px; /* To avoid padding, aiding the bg image */
 	  --horizGap: 8vw;
 
-	  margin-top: -100svh;
-   z-index: 0; /* Above the bg images */
+	  position: relative; /* Creating a point of reference */
 	  
 	  &::before {
 	    display: block;
 	    content: '';
 	    background: url('../images/lille.jpg') center/cover no-repeat;
-	    position: fixed;
+	    position: sticky;
 	    top: 0;
 	    left: 0;
 	    width: 100vw;
-	    height: 100lvh;
+	    height: 100svh;
 	    object-fit: contain; /* Need dimensions for this */
-	    z-index: -2; /* Below header's bg image */
+	    z-index: -1; /* Above header's bg image */
 	  }
 	}
 
 	section {
-	  min-height: 100svh;
+	  z-index: 0; /* Above main's bg image */
+	  min-height: 100svh; /* To avoid interlloping on main's bg image */
 	  padding: var(--vertGap) var(--horizGap);
 
 	  &#company {
 	    background-color: white;  
+	    margin-top: -100svh; /* To align with main bg image's top */
 	  }
 
 	  &#sectors {
