@@ -218,7 +218,7 @@
 	    top: 0;
 	    left: 0;
 	    width: 100vw;
-	    height: 100svh;
+	    height: 100lvh; /* Not get covered by following sections when bar tools collapse */
 	    object-fit: contain; /* Need dimensions for this */
 	    z-index: -1; /* Above header's bg image */
 	  }
@@ -226,12 +226,12 @@
 
 	section {
 	  z-index: 0; /* Above main's bg image */
-	  min-height: 100svh; /* To avoid interlloping on main's bg image */
+	  min-height: 100lvh; /* To avoid interlloping on main's bg image */
 	  padding: var(--vertGap) var(--horizGap);
 
 	  &#company {
 	    background-color: white;  
-	    margin-top: -100svh; /* To align with main bg image's top */
+	    margin-top: -100lvh; /* To align with main bg image's top */
 	  }
 
 	  &#sectors {
