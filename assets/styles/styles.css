@@ -242,8 +242,8 @@
      &>ul {
        list-style: none;
        display: grid;
-       grid-template-columns: repeat(autofit,    minmax(200px, 1fr)); /* Fit as many 200px wide grid items as possible in one row */
-       justify-content: center;
+       grid-template-columns: repeat(autofit, 200px); /* Fit as many 200px wide grid items as possible in one row */
+       justify-content: start;
        gap: 40px;
     
        &>li {
