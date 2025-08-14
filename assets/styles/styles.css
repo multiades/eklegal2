@@ -226,7 +226,7 @@
 
 	section {
 	  z-index: 0; /* Above main's bg image */
-	  min-height: 100lvh; /* To avoid interlloping on main's bg image */
+	  min-height: 100lvh; /* To avoid interlopping on main's bg image */
 	  padding: var(--vertGap) var(--horizGap);
 
 	  &#company {
@@ -235,7 +235,20 @@
 	  }
 
 	  &#sectors {
-	    color: white;
+     &>ul {
+       list-style: none;
+       display: grid;
+       grid-template-columns: repeat(autofit,    200px); /* Fit as many 200px wide grid items as possible in one row */
+       justify-content: center;
+       gap: 100px;
+    
+       &>li {
+         width: 200px;
+         height: 150px;
+         background-color: white;
+         border-radius: 16px;
+       }
+     }
 	  }
 
 	  &#aboutUs {
