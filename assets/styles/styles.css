@@ -1,40 +1,42 @@
 * {
-	  box-sizing: border-box;
-	  margin: 0;
-	  padding: 0;	
-	}
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;	
+}
 
-	/* Block level elements get width: 100% by default.
-	Most browsers scroll on html, some mobile ones may do it on body */
-	html,
-	body {
-	  overscroll-behavior: none; /* Supress scroll chaining events an rubber band bouncing  */
-	}
+/* Block level elements get width: 100% by default. Most browsers scroll on html, some mobile ones may do it on body */
+html,
+body {
+  overscroll-behavior: none; /* Supress scroll chaining events an rubber band bouncing  */
+}
 
-	body {
-	  font-family: 'Open Sans', 'Advent Pro', sans-serif;
-	  font-optical-sizing: auto;
-	  font-weight: normal;
-	  font-style: normal;
-	  font-variation-settings: "wdth" 100;
-	  font-size: medium;
-	}
-	  
-	a,
-	label[for],
-	button {
-	  cursor: pointer; /* No need to use :hover, it is evident */
-	} /* Maybe do that on fine pointer media */
-	  	    
-	a {
-	  font-style: normal;
-	  text-decoration: none;  
-	} 
+body {
+  font-family: 'Athelas', serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: medium;
+}
 
-	header {
-	  height: 100svh; /* The smallest viewport */
-	  padding-top: calc(100svh - 6rem); /* To place h1 */
-	  padding-left: 2rem; /* To place h1 */
+a,
+label[for],
+button {
+  cursor: pointer; /* No need to use :hover, it is evident */
+} /* Maybe do that on fine pointer media */  	    
+
+a {
+  font-style: normal;
+  text-decoration: none;  
+} 
+
+header {
+  --logoWidth: 130px; /* Original png is 780x426, both dimensions divisible by 6 */
+  --logoHeight: 71px;
+	  --vertGap: 16px; /* vert @ vertical */
+	  --horizGap: 16px; /* horiz @ horizontal */
+  
+  height: 100svh; /* The smallest viewport */
+	  padding: 50% 0 2rem 4rem; /* To place h1 */
+	  color: white;
 
 	  &::before {
 	    display: block;
@@ -57,11 +59,7 @@
 	  --transDuration: 800ms; /* trans @ transition */
 	  --transCurve: ease-in-out; 
 	  --opacDelay: 200ms; /* opac @ opacity */
-	  --logoWidth: 130px; /* Original png is 780x426, both dimensions divisible by 6 */
-	  --logoHeight: 71px;
-	  --vertGap: 16px; /* vert @ vertical */
-	  --horizGap: 16px; /* horiz @ horizontal */
-	  --bgColor: #ccc;
+	  --bgColor: rgba(50, 50, 50, 0.95);
 
 	  position: fixed;
 	  top: 0;
@@ -75,8 +73,9 @@
 	  transition-delay: var(--opacDelay); /* When navToggler is previously checked, wait for navbar content to fade out */
 	  clip-path: polygon(
 	    0 0,
-	    calc(var(--logoWidth) + 2 * var(--horizGap)) 0,
-	    calc(var(--logoWidth) + 2 * var(--horizGap)) calc(var(--logoHeight) + 2 * var(--vertGap)),
+            100% 0,
+	      
+	    100% calc(var(--logoHeight) + 2 * var(--vertGap)),
 	    0 calc(var(--logoHeight) + 2 * var(--vertGap)),
 	    0 0
 	  );
@@ -110,7 +109,7 @@
 	      flex-shrink: 0; /* All flex anchor items won't get squished (scootched) on overflows */
 	      &>a {
 		    user-select: none; /* Can't highlight anything, it can be inherited but some browsers inject specific styling for it, like for a's color */
-		    color: black;
+		    color: white;
 	      }
 	    }
 	  }
@@ -119,15 +118,15 @@
 	label[for="navToggler"] {
 	  --line: 5px;
 	  --labelDim: calc(var(--line) * 5); /* Operating on unitless numbers preserves the unit, dim @ dimensions */
-	  --primaryColor: black;
-	  --secondaryColor: black;
+	  --primaryColor: white;
+	  --secondaryColor: white;
 	  --transDuration: 400ms; /* Scoped CSS properties, they take precedence over others with the same name */
 	  --transCurve: ease-in-out;
 	  
 	  width: var(--labelDim);
 	  height: var(--labelDim);
 	  position: fixed;
-	  top: 24px;
+	  top: 32px;
 	  right: 24px;
 	  z-index: 2; /* Above nav#navbar */
 	  display: flex;
@@ -150,14 +149,17 @@
 
 	h1 {
 	  font-size: 2rem;
-	  font-weight: bold;
-	  color: white;
 	  text-shadow: 0.5px 0.5px 16px black;
 	  animation-duration: 1.2s;
 	  animation-iteration-count: 1;
 	  animation-name: backInLeft;
 	  animation-timing-function: ease-out;
-	}
+        }
+	
+header>p {
+  font-size: 1.25rem;
+  margin-top: 4rem; 
+}
 
 	/* When the navToggler is checked */
 	input#navToggler:checked {
@@ -230,32 +232,36 @@
 	  padding: var(--vertGap) var(--horizGap);
 
 	  &#company {
-	    background-color: white;  
+            color: white;
+            background-color: #323232;  
 	    margin-top: -100lvh; /* To align with main bg image's top */
 	  }
 
-	  &#sectors {
-     &>h2 {
-       color: white;
+   &#sectors {
+     color: black;	      
+     background-color: #eaeae9;
+
+     &>h2 {  
      }
 
      &>ul {
        list-style: none;
-       display: grid;
-       grid-template-columns: repeat(autofit, 200px); /* Fit as many 200px wide grid items as possible in one row */
-       justify-content: start;
-       gap: 40px;
+       display: flex;
+       justify-content: center;
+       flex-wrap: wrap;
+       gap: 4rem;
     
        &>li {
-         aspect-ratio: 4 / 3; /* Control height via width */
+         width: 14rem;
+         height: 10rem;
          background-color: white;
-         border-radius: 16px;
+         border: 2px solid black;
+         border-radius: 32px 0;
        }
      }
-	  }
+   }
 
-	  &#aboutUs {
-	    background-color: white;
+    &#aboutUs {
 	    
 	    &>img {
 	      display: block;
