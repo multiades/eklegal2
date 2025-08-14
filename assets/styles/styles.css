@@ -238,8 +238,8 @@ header>p {
 	  }
 
    &#sectors {
-     color: black;	      
-     background-color: #eaeae9;
+     color: white;	      
+     background-color: transparent;
 
      &>h2 {  
      }
@@ -262,8 +262,9 @@ header>p {
    }
 
     &#aboutUs {
+      background-color: #eaeae9;
 	    
-	    &>img {
+	     &>img {
 	      display: block;
 	      width: min(768px, 80vw);  /* Use 80vw on narrow screens */
 	      height: auto;  /*No need for object-fit since height is auto */
